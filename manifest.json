@@ -1,0 +1,29 @@
+{
+    "manifest_version": 3, 
+    "name": "Cookie Monster",
+    "description": "enhances privacy rights and consumer protection through AI-driven consent management",
+    "version": "1.0",
+    "action": {
+        "default_popup": "extension/popup.html",
+        "default_icon": "extension/cookieMonster.png"
+    },
+    "permissions": [
+        "activeTab", 
+        "scripting",
+        "webRequest",
+        "webRequestBlocking",
+        "tabs"
+    ],
+    "background": {
+        "service_worker": "extension/background.js"
+    },
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_scripts": [
+    {
+      "matches": ["https://google.com/*"],
+      "js": ["extension/content.js"]
+    }
+  ]
+}
