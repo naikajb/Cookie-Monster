@@ -8,21 +8,19 @@
         "default_icon": "extension/cookieMonster.png"
     },
     "permissions": [
-        "activeTab", 
+      "activeTab", 
         "scripting",
         "webRequest",
-        "webRequestBlocking",
+        "webNavigation",
         "tabs"
     ],
     "background": {
         "service_worker": "extension/background.js"
     },
-    "host_permissions": [
-        "<all_urls>"
-    ],
+    "host_permissions": ["<all_urls>"],
     "content_scripts": [
     {
-      "matches": ["https://google.com/*"],
+      "matches": ["<all_urls>"],
       "js": ["extension/content.js"]
     }
   ]

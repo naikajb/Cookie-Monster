@@ -1,13 +1,26 @@
-//this will send a message to the background.js to check for cookie headers
-chrome.runtime.sendMessage({ type: 'checkForCookie' });
+console.log("Content.js is running... (GLOABL)");
 
-//this will listen to the message sent by the background.js when cookies are found
-chrome.runtime.onMessage.addListener((message) => {
-    if (message.type === 'cookiesFound') {
-      console.log("Cookies for this page:", message.data);
-      
-      // Optionally display or process cookies in the DOM here
-    }
-  });
+// const pageContent = document.body.innerText;
+// //console.log("page content:", pageContent);
 
-  console.log("Content.js is running...");
+// const pageHTML = document.documentElement.outerHTML; 
+// //console.log("Full HTML Content: ", pageHTML);
+
+// //send the content of the page to the background.js when page is loaded
+// chrome.runtime.sendMessage({message: "page_content", content: pageContent, html: pageHTML});
+
+function getHTMLContent() {
+  console.log("Content.js is running... (LOCAL)");
+
+  const pageContent = document.body.innerText;
+  //console.log("page content:", pageContent);
+
+  const pageHTML = document.documentElement.outerHTML;
+  //console.log("Full HTML Content: ", pageHTML);
+
+  //send the content of the page to the background.js when page is loaded
+  chrome.runtime.sendMessage({ message: "page_content", content: pageContent, html: pageHTML });
+
+}
+
+getHTMLContent();
