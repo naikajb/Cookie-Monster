@@ -1,42 +1,47 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    /* Background of the popup is transparent */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    /*height: 10px;*/
-    width: 500px;
-    /* Ensures full height for alignment */
-    overflow: auto; 
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  /* Background of the popup is transparent */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /*height: 10px;*/
+  width: 500px;
+  /* Ensures full height for alignment */
+  overflow: auto;
 }
 
-  p {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-  }
+p {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
 
-  pre {
-    font-family: monospace;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-  }
+#privacy-policy-container {
+  display: none;
+}
 
-  #title {
-    font-weight: bold;
-  }
+pre {
+  font-family: monospace;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
 
-  #url {
-    margin-left: 20px;
-  }
+#title {
+  font-weight: bold;
+}
 
-  #content {
-    padding: 20px;
-    border-radius: 10px;
-    background-color: rgba(102, 51, 153, 0.5);
-    width: 100%;
-  }
+#url {
+  margin-left: 20px;
+}
+
+#content {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(102, 51, 153, 0.5);
+  width: 100%;
+}
+
