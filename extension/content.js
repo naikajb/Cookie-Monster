@@ -45,7 +45,7 @@ function findLinks() {
   return refinedLinkDetails.filter((link) => link.href !== "");
 }
 
-console.log(findLinks());
+//console.log(findLinks());
 
 
 //send a message that links containing privacy policy (and related words) have been found
