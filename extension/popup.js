@@ -2,6 +2,9 @@ console.log("Cookie Monster is running...");
 
 var contentForBackend = "";
 
+
+//sends message to background.js to say it is opened
+//receives as a response the content of the found privacy pages
 chrome.runtime.sendMessage({ type: "popup_opened" }, (response) => {
     console.log("received from background.js: ", response);
 
@@ -119,7 +122,7 @@ chrome.runtime.onMessage.addListener((message) => {
 
 
 async function sendToBackend(content) {
-    const backendURL = "http://localhost:5000/receive-content";
+    const backendURL = "http://127.0.0.1:5001/receive-content";
 
     const data = {
         privacyContent: content
