@@ -15,6 +15,9 @@ app = Flask(__name__)
 CORS(app)
 
 
+#TODO: this is not working i get error that i exceeded the quota.
+#  Maybe if i do multiple request with each <p> i find 
+# on the pages it will work? but look at quota before doing that
 def analyze_privacy(pages):
     print("Analyzing privacy...")
     for item in pages:
