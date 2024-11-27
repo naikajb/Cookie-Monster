@@ -1,26 +1,5 @@
 console.log("Content.js is running... (GLOABL)");
-getHTMLContent();
-
-//get the content of the page and the html content
-function getHTMLContent() {
-  console.log("Content.js is running... (LOCAL)");
-
-  const pageContent = document.body.innerText;
-
-  const pageHTML = document.documentElement.outerHTML;
-
-  //send the content of the page to the background.js when page is loaded
-  chrome.runtime.sendMessage({ message: "page_content", content: pageContent, html: pageHTML });
-
-}
-
-chrome.runtime.onMessage.addListener((request) => {
-  if (request.type === "found_keywords") {
-    console.log("Keywords found: ");
-    console.log(request.keywords);
-  }
-});
-
+//getHTMLContent();
 
 // gets all the links on the current pade and returns them as an array of objects
 function findLinks() {
@@ -30,8 +9,6 @@ function findLinks() {
     href: link.href, // Full URL of the link
     text: link.textContent.trim(), // Link text
     target: link.target || "_self", // Target attribute (e.g., _blank)
-
-
   }));
 
   let keywords = ["privacy policy", "privacy", "policy", "data policy", "cookie", "cookies", "cookie policy", "Privacy Policy", "Privacy", "Policy", "Data Policy", "Cookie", "Cookies", "Cookie Policy", "PRIVACY POLICY", "PRIVACY", "POLICY", "DATA POLICY", "COOKIE", "COOKIES", "COOKIE POLICY"];
@@ -45,13 +22,21 @@ function findLinks() {
   return refinedLinkDetails.filter((link) => link.href !== "");
 }
 
-//console.log(findLinks());
-
-
 //send a message that links containing privacy policy (and related words) have been found
 chrome.runtime.sendMessage({ type: "found_policy_pages", links: findLinks().reverse() });
 
+//get the content of the page and the html content
+// function getHTMLContent() {
+//   console.log("Content.js is running... (LOCAL)");
 
+//   const pageContent = document.body.innerText;
+
+//   const pageHTML = document.documentElement.outerHTML;
+
+//   //send the content of the page to the background.js when page is loaded
+//   chrome.runtime.sendMessage({ message: "page_content", content: pageContent, html: pageHTML });
+
+// }
 
 // (() => {
 //   const fetchLinkContent = async (links) => {

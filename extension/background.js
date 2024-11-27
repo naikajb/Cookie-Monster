@@ -1,6 +1,6 @@
 //console.log("Background.js is running...");
-let htmlContent;
-let popupPort;
+let htmlContent; // store the page contents and then when the popup is clicked this variable is sent to the popup.js
+
 let found = false; 
 //listen for change in url and send the content of the page to the content.js
 chrome.webNavigation.onCompleted.addListener((details) => {
@@ -10,12 +10,12 @@ chrome.webNavigation.onCompleted.addListener((details) => {
   });
 });
 
+//check that the popup.js is connected before trying to send smtg to it
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {if(message.type === "popup_opened"){
     console.log("Popup opened, sending data");
   }
   sendResponse({ message: "html" ,content: htmlContent });
-  
-  
+
 });
 
 
@@ -34,21 +34,12 @@ chrome.runtime.onMessage.addListener((message) => {if (message.type === "found_p
       return {content: result.content, link: result.link, text: result.text};
        });
     });
-
-    found = true;
     //console.log("htmlContent: ", htmlContent);
     //sendToFront();
   }
 });
 
-function sendToFront() {
-  if(popupPort){
-    popupPort.postMessage({ type: "updateData", data: htmlContent });
-  }
-  else{
-    console.log("Tried to send: " , htmlContent, "No connection to popup.js");
-  }
-}
+
 
 // helper method to fetch the html of the links
 async function fetchLinkContent(links) {
@@ -97,7 +88,3 @@ async function fetchLinkContent(links) {
 // var linkTest = fetchLinkContent(findLinks());
 // console.log("linkTest: ", linkTest);
 // chrome.runtime.sendMessage({ type: "link_content", linkContents: linkTest });
-
-if (found) {
-  chrome.runtime.sendMessage({ type: "links_with_html", links: htmlContent });
-}
