@@ -19,10 +19,12 @@ CORS(app)
 #  Maybe if i do multiple request with each <p> i find 
 # on the pages it will work? but look at quota before doing that
 def analyze_privacy(pages):
+    #return {"message": "gpt-summary", "summary" : "This is a summary of the privacy policy"}
     print("Analyzing privacy...")
+    summaries = []
+    
     for item in pages:
         try: 
-           
             prompt = f"Can you summarize the privacy policy in a way that will help the user make informed choices about their privacy?Here is the privacy policy for this page: {item}"
 
             response = client.chat.completions.create(
@@ -33,19 +35,29 @@ def analyze_privacy(pages):
                     },
                     {"role": "user", 
                     "content": prompt},
-                ],  
-                max_tokens=10,
-                
+                ],               
             )
 
             summary = response.choices[0].message.content
-            print("summary:", summary)
+            summaries.append(summary)
+            #print("summary:", summary)
         except Exception as e:
             print(f"Error in analyzing privacy: {e}")
             return jsonify({"message": "Error in analyzing privacy"}), 500
         
-        print("item:", item, "\n--------------------------------------------------------")
-        break
+        #print("item:", item, "\n--------------------------------------------------------")
+        #break
+
+    # final_response = client.chat.completions.create(
+    #     model="gpt-4o-mini-2024-07-18",
+    #     messages=[
+    #         {"role": "user", 
+    #         "content": "Here are the summaries of the privacy policies: " + str(summaries) + "please use them to inform the user about their privacy choices."},
+    #     ],               
+    # )
+
+    return {"message": "gpt-summary", "summary" :summaries[0]}
+
         
 
 def cleanUpHtml(htmlToAnalyze):
@@ -80,18 +92,19 @@ def cleanUpHtml(htmlToAnalyze):
         privacy_text_from_pages.append(t)
        
     print("HTML was cleaned up. Text now being analyzed...")
-    analyze_privacy(privacy_text_from_pages)
+    response = analyze_privacy(privacy_text_from_pages)
+    return response
     
 @app.route('/receive-content', methods=['POST'])
 def receive_content():
     print("receive content: i am here")
     try:
         data = request.json
-        #print("data:", data)
+        #print("data:", data.)
         privacy_data = data.get("privacyContent", [])
-        print(len(privacy_data))
+        #print(len(privacy_data))
 
-        response_message = {"message" : "Content received successfuly in back end", "received_content": data}
+        response_message = {"message" : "Content received successfuly in back end", "received_content": privacy_data}
 
         htmlToAnalyze = []
         linksToAnalyze = []
@@ -106,8 +119,8 @@ def receive_content():
             text = item.get("text")
             htmlToAnalyze.append(content)
         
-        #print("links to analyze:", linksToAnalyze)
-        cleanUpHtml(htmlToAnalyze)
+        # #print("links to analyze:", linksToAnalyze)
+        response_message = cleanUpHtml(htmlToAnalyze)
 
         #analyze the content
        # analyzed_content = analyze_privacy(linksToAnalyze)

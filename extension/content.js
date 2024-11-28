@@ -1,6 +1,6 @@
 console.log("Content.js is running... (GLOABL)");
 //getHTMLContent();
-
+findLinks();
 // gets all the links on the current pade and returns them as an array of objects
 function findLinks() {
   let links = document.querySelectorAll("a");
@@ -18,12 +18,42 @@ function findLinks() {
     return keywords.some((keyword) => link.text.includes(keyword));
   }
   );
-  //return the links but remove any that could be empty 
-  return refinedLinkDetails.filter((link) => link.href !== "");
+
+
+  fetchLinkContent(refinedLinkDetails).then((results) => {
+      
+    results.forEach((result) => {
+      return {content: result.content, link: result.link, text: result.text};
+    });
+
+    chrome.runtime.sendMessage({ type: "found_policy_pages", links: results });
+    console.log("Here are the results inside of the fetchLinkContent function in content.js: ", results);
+  });
 }
 
+async function fetchLinkContent(links) {
+  const results = await Promise.all(
+    Array.from(links).map(async (link) => {
+      try {
+        const response = await fetch(link.href);
+        if (response.ok) {
+          //this stores the html content of the link --> send it to popup.js
+          const html = await response.text();
+          return { link: link.href, content: html, text: link.text };
+        } else {
+          return { link: link.href, error: `Failed to fetch: ${response.status}` };
+        }
+      } catch (error) {
+        return { link: link.href, error: error.message };
+      }
+    })
+  );
+  //console.log("Here are the results inside of the fetchLinkContent() function in content.js: ", results);
+
+  return results;
+}
 //send a message that links containing privacy policy (and related words) have been found
-chrome.runtime.sendMessage({ type: "found_policy_pages", links: findLinks().reverse() });
+//chrome.runtime.sendMessage({ type: "found_policy_pages", links: findLinks().reverse() });
 
 //get the content of the page and the html content
 // function getHTMLContent() {
