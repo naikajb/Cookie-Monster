@@ -2,7 +2,6 @@ console.log("Background.js is running...");
 let htmlContent; // store the page contents and then when the popup is clicked this variable is sent to the popup.js
 var privacySummary;
 
-let found = false;
 //listen for change in url and send the content of the page to the content.js
 chrome.webNavigation.onCompleted.addListener((details) => {
   chrome.scripting.executeScript({
@@ -102,6 +101,7 @@ async function sendToBackend(content) {
       console.log("Response from backend:", data);
       //privacySummary = data.recei;
       // console.log("htmlContent: ", htmlContent);
+      //sendToFront();
     })
     .catch((error) => {
       console.log("Error sending to backend:", error);
@@ -109,9 +109,14 @@ async function sendToBackend(content) {
 
 }
 
+chrome.runtime.sendMessage({ type: "summary_of_policies_received", content: privacySummary });
 
+chrome.runtime.sendMessage({ type: "summary_of_policies", content: privacySummary });
 
-
+function sendToFront() {
+  
+  chrome.runtime.sendMessage({ type: "summary_of_policies", content: privacySummary });
+}
 
 //should be getting the content from the links that contain the privacy policy
 

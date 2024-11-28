@@ -52,6 +52,13 @@ async function fetchLinkContent(links) {
 
   return results;
 }
+
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === "summary_of_policies_received") {
+    console.log("Summary of policies is received in content.js");
+  }
+});
+
 //send a message that links containing privacy policy (and related words) have been found
 //chrome.runtime.sendMessage({ type: "found_policy_pages", links: findLinks().reverse() });
 

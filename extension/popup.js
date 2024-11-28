@@ -1,32 +1,32 @@
 console.log("Cookie Monster is running...");
 
-var contentForBackend = "";
+var text = "";
 
-
-//sends message to background.js to say it is opened
-//receives as a response the content of the found privacy pages
-chrome.runtime.sendMessage({ type: "popup_opened" }, (response) => {
-    console.log(response);
-    document.getElementById("response").innerHTML = "<p> Summary of the Privacy policy </p>";
-    document.getElementById("privacy-text-placeholder").style.display = "none";
-    document.getElementById("privacy-policy-text").innerText = response.content.summary;
-    //console.log("response.content: ", response.content.summary);
-
-});
-
+//receive the summary policies from the background.js
 chrome.runtime.onMessage.addListener((message) => {
-    if (message.type === "privacy_summary") {
-        console.log("Popup received the privacy summary");
-        console.log("message", message.summary);
+    if(message.type == "summary_of_policies"){
+        // console.log("Popup.js received the summary of policies");
+        // console.log("message", message);
+        // document.getElementById("response").innerHTML = "<p> Summary of the Privacy policy </p>";
+        // document.getElementById("privacy-text-placeholder").style.display = "none";
+        text = message.content.summary;
+        console.log("text: ", text);
     }
-
 });
+
 //gets the title of the current web page when chrome extension is clicked
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const title = document.getElementById("page-title");
-    title.innerHTML = "<h3> Privacy Policy for: " + tabs[0].title + "</h3>";
+// chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//     const title = document.getElementById("page-title");
+//     title.innerHTML = "<h3> Privacy Policy for: " + tabs[0].title + "</h3>";
+//     document.getElementById("privacy-text-placeholder").style.display = "none";
+//     document.getElementById("response").innerHTML = "<p> Summary of the Privacy policy </p>";
+//     document.getElementById("privacy-policy-text").innerHTML = "<p>" + text+ "</p>";
 
-});
+
+
+// });
+
+
 
 
 // async function sendToBackend(content) {
