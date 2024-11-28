@@ -19,7 +19,7 @@ CORS(app)
 #  Maybe if i do multiple request with each <p> i find 
 # on the pages it will work? but look at quota before doing that
 def analyze_privacy(pages):
-    #return {"message": "gpt-summary", "summary" : "This is a summary of the privacy policy"}
+    # return {"message": "gpt-summary", "summary" : "This is a summary of the privacy policy"}
     print("Analyzing privacy...")
     summaries = []
     
