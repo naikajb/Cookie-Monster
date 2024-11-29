@@ -15,9 +15,6 @@ app = Flask(__name__)
 CORS(app)
 
 
-#TODO: this is not working i get error that i exceeded the quota.
-#  Maybe if i do multiple request with each <p> i find 
-# on the pages it will work? but look at quota before doing that
 def analyze_privacy(pages):
     # return {"message": "gpt-summary", "summary" : "This is a summary of the privacy policy"}
     print("Analyzing privacy...")
@@ -25,8 +22,8 @@ def analyze_privacy(pages):
     
     for item in pages:
         try: 
-            prompt = f"Can you summarize the privacy policy in a way that will help the user make informed choices about their privacy?Here is the privacy policy for this page: {item}"
-
+            prompt = f"Can you summarize the privacy policy in a way that will help the user make informed choices about their privacy? Here is the privacy policy for this page: {item}."
+            
             response = client.chat.completions.create(
                 model="gpt-4o-mini-2024-07-18",
                 messages=[
@@ -47,16 +44,29 @@ def analyze_privacy(pages):
         
         #print("item:", item, "\n--------------------------------------------------------")
         #break
+    try:
+        print("Creating the final response...")
+        final_response = client.chat.completions.create(
+            model="gpt-4o-mini-2024-07-18",
+            messages=[
+                {"role": "user", 
+                "content": "Here are the summaries of the privacy policies: " + str(summaries) + "please use them to inform the user about their privacy choices on this site and if they shouldnt use this site for tracing reasons or any other security issues. Raise any red flags necessary. Give the answer back in HTML and format different sections wiht headers instead of numbering."},
+            ],               
+        )
+        print("final response:", final_response.choices[0].message.content)
+        text_answer = final_response.choices[0].message.content.replace("```", "")
 
-    # final_response = client.chat.completions.create(
-    #     model="gpt-4o-mini-2024-07-18",
-    #     messages=[
-    #         {"role": "user", 
-    #         "content": "Here are the summaries of the privacy policies: " + str(summaries) + "please use them to inform the user about their privacy choices."},
-    #     ],               
-    # )
+        html_pattern = r"<!DOCTYPE html><html>*?</html>"
+        t = re.search(html_pattern, text_answer, re.DOTALL)
 
-    return {"message": "gpt-summary", "summary" :summaries[0]}
+        soup = BeautifulSoup(text_answer, 'html.parser')
+        text_answer = soup.prettify()
+
+    except Exception as e:
+        print(f"Error in creating the final response: {e}")
+        return jsonify({"message": "Error creating the final response"}), 500
+
+    return {"message": "gpt-summary", "summary" : text_answer}
 
         
 
@@ -93,6 +103,8 @@ def cleanUpHtml(htmlToAnalyze):
        
     print("HTML was cleaned up. Text now being analyzed...")
     response = analyze_privacy(privacy_text_from_pages)
+    print("response:", response)
+    
     return response
     
 @app.route('/receive-content', methods=['POST'])
