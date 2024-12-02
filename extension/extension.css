@@ -9,6 +9,7 @@ body {
     height: 460px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
   
   #content{

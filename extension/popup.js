@@ -4,12 +4,13 @@ var text = "";
 document.getElementById("get-privacy-analysis-button").onclick = () => {
     console.log("Clicked get-privacy-analysis-button");
     document.getElementById("get-privacy-analysis-button").style.display = "none";
+    document.getElementById("button-container").style.display = "flex";
     document.getElementsByClassName("loader")[0].style.display = "block";
     
-    //document.getElementById("response").style.display = "flex";
+    
     //document.getElementById("page-title").style.display = "none";
     document.getElementById("content").style.display = "flex";
-    document.getElementById("content").style.justifyContent = "flex-start";
+    document.getElementById("content").style.justifyContent = "center";
     // chrome.runtime.sendMessage({ type: "get_summary" }, (response) => {
     //     console.log("Response from background.js: ", response);
     //     text = response;
