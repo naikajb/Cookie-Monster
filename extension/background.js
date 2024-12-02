@@ -17,6 +17,7 @@ chrome.runtime.onMessage.addListener((message) => {
     console.log("summary : ", message.content);
 
     privacySummary = message.content.summary;
+    chrome.sendMessage({type: "summary", content: message.content});
     //console.log("Background.js received the found policy");
     //console.log("message", message);
     //console.log(Array.from(message));

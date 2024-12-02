@@ -1,26 +1,46 @@
 <html>
+
 <head>
   <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body id="page">
-  <link rel = "stylesheet" href = "popup.css">
+  <link rel="stylesheet" href="extension.css">
   <div id="content">
     <title>Cookie Monster</title>
-    <p id = "page-title"></p>
-    <div id="response">
-      Loading Response...
+    <h1 id="page-title">Title.com</h1>
+    
+    <div id="button-container">
+      <button id="get-privacy-analysis-button" onclick="handleClick()">GET PRIVACY ANALYSIS</button>
+      <div class="loader"></div>
     </div>
 
-    
-      <p id = "privacy-text-placeholder">Loading privacy policy...</p>
-      <p id = "privacy-policy-text"></p>
-
-   
-    
+    <div id="response">
+      <h2 id = "analysis-header">Privacy Analysis of </h2>
+      <div id = "overall_text"></div>
+      <div id="good-points">
+        <h3>Good Points</h3>
+        <ul>
+          <li>Good Point 1</li>
+          <li>Good Point 2</li>
+          <li>Good Point 3</li>
+        </ul>
+      </div>
+      <div id="bad-points">
+        <h3>Bad Points</h3>
+        <ul>
+          <li>Bad Point 1</li>
+          <li>Bad Point 2</li>
+          <li>Bad Point 3</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  
+
+
+
 
   <script src="popup.js"></script>
 </body>

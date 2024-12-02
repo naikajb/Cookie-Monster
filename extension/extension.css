@@ -1,0 +1,158 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    width: 400px;
+    height: 460px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    overflow: scroll;
+  }
+
+  #page-title{
+    display: flex;
+    font-weight: bold;
+    align-self: center;
+    /* border: 2px red solid; */
+    justify-content: center;
+  }
+  
+  #button-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    /* border: 2px green solid; */
+  }
+
+  #response {
+    flex-direction: column;
+    display: none;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header after the response */
+  #analysis-header {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #000000;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+  
+  
+  #overall_text {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-left: 5px solid #979997;
+    background-color: #d3d6d68a;
+    border-radius: 4px;
+  }
+  
+  /* Section Titles */
+  #good-points h3,
+  #bad-points h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Good Points */
+  #good-points {
+    background-color: #e7f9e7; /* Light green for positive points */
+    border: 1px solid #c8e6c9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+  
+  #good-points ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+  
+  #good-points li {
+    margin-bottom: 5px;
+    color: #2e7d32;
+  }
+  
+  /* Bad Points */
+  #bad-points {
+    background-color: #fdecea; /* Light red for negative points */
+    border: 1px solid #f8d7da;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  #bad-points ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+  
+  #bad-points li {
+    margin-bottom: 5px;
+    color: #c62828;
+  }
+  
+  /* Hover Effects for List Items
+  #good-points li:hover,
+  #bad-points li:hover {
+    font-weight: bold;
+  }
+   */
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    #response {
+      padding: 10px;
+    }
+  
+    #analysis-header {
+      font-size: 1.3rem;
+    }
+  
+    #good-points h3,
+    #bad-points h3 {
+      font-size: 1rem;
+    }
+  }
+  
+  /* HTML: <div class="loader"></div> */
+.loader {
+    display: none;
+    width: fit-content;
+    /* font-weight: bold; */
+    font-family: sans-serif;
+    font-size: 20px;
+    padding: 0 5px 8px 0;
+    background: repeating-linear-gradient(90deg,currentColor 0 8%,#0000 0 10%) 200% 100%/200% 3px no-repeat;
+    animation: l3 2s steps(6) infinite;
+  }
+  .loader:before {
+    content:"loading..."
+  }
+  @keyframes l3 {to{background-position: 80% 100%}}
+
+  #get-privacy-analysis-button{
+    color: white;
+    height: 50px;
+    width: 150px;
+    background-color: rgb(91, 143, 246);
+    /* border: 2px solid rgb(0, 0, 0); */
+    border-radius: 5px;
+    border: none;
+  }
