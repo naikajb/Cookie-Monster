@@ -10,3 +10,6 @@ Browser extension that aims to help users make informed decisons about their pri
 | Muiz Madadi | [@mzmddi](https://github.com/mzmddi) |
 | Shamma Markis | [@shamma13](https://github.com/shamma13) |
 | Tanya So Tin Yan | [@Tanya-STY](https://github.com/Tanya-STY) |
+
+## Video Demo 
+A video was filmed to present this project. It was uploaded to Youtube and you can find it [here](https://youtu.be/JDBGhdzgtc4).
