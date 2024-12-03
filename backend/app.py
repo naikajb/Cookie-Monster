@@ -21,9 +21,9 @@ def analyze_privacy(pages):
     # print("Analyzing privacy...")
     # time.sleep(10)
     #return {"message": "gpt-summary", "summary" : "This is the main summary of the policies"}
-    print("Analyzing privacy...")
+    print("Analyzing privacy...0")
     summaries = []
-    
+    print("Analyzing privacy...1")
     for item in pages:
         try: 
             prompt = f"Can you summarize the privacy policy in a way that will help the user make informed choices about their privacy? Here is the privacy policy for this page: {item}."
@@ -48,8 +48,9 @@ def analyze_privacy(pages):
         
         #print("item:", item, "\n--------------------------------------------------------")
         #break
+    print("Analyzing privacy...2")
     try:
-        print("Creating the final response...")
+        print("Creating the final response...0")
 
         # defines the format of the answer returned by the model
         response_format = {"type": "json_schema", 
@@ -92,6 +93,7 @@ def analyze_privacy(pages):
                                             }
                     }
         }
+        print("Creating the final response...1")
 
         final_response = client.chat.completions.create(
             model="ft:gpt-4o-mini-2024-07-18:personal:training:AZ0ojPQJ",
@@ -101,14 +103,17 @@ def analyze_privacy(pages):
                 "content": "Here are the summaries of the privacy policies: " + str(summaries) + ". Classify your answer giving the good and bad points as well as an overall summary text. The overall summary text needs to be 150 words maximum. There could be only bad points, only good points, or both. If there are no good or bad points, please write 'None'."},
             ],               
         )
+        print("Creating the final response...2")
         #print("final response:", final_response.choices[0].message.content)
         json_answer = final_response.choices[0].message.content
+        print("Creating the final response...3")
 
 
     except Exception as e:
         print(f"Error in creating the final response: {e}")
         return jsonify({"message": "Error creating the final response"}), 500
 
+    print("Creating the final response...4")
     return json_answer 
 
         
@@ -121,8 +126,11 @@ def cleanUpHtml(htmlToAnalyze):
     #print (htmlToAnalyze[0])
     for page in htmlToAnalyze:
         #print ("page:", page)
+        print("Cleaning up html...0")
         soup = BeautifulSoup(page, 'html.parser')
+        print("Cleaning up html...1")
         body_text = soup.find("body").text
+        print("Cleaning up html...2")
 
         for a_tag in soup.find_all('a'):
             a_tag.decompose()
@@ -141,9 +149,13 @@ def cleanUpHtml(htmlToAnalyze):
         for header in soup.find_all('h1, h2, h3, h4, h5, h6'):
             header.decompose()
         #privacy_text_from_pages.append(str(soup))
+        print("Cleaning up html...3")
         t = soup.get_text()
+        print("Cleaning up html...4")
         t = re.sub(r'\s+', ' ', t)
+        print("Cleaning up html...5")
         privacy_text_from_pages.append(t)
+        print("Cleaning up html...6")
        
     print("HTML was cleaned up. Text now being analyzed...")
     response = analyze_privacy(privacy_text_from_pages)
@@ -161,7 +173,7 @@ def get_privacy():
 
 @app.route('/receive-content', methods=['POST'])
 def receive_content():
-    print("receive content: i am here")
+    print("/receive-content route: i am here")
     try:
         data = request.json
         #print("data:", data.)
@@ -192,6 +204,7 @@ def receive_content():
 
         #analyze the content
        # analyzed_content = analyze_privacy(linksToAnalyze)
+        
         return jsonify(response_message), 200
     
 

@@ -10,7 +10,7 @@ document.getElementById("get-privacy-analysis-button").onclick = () => {
     
     //document.getElementById("page-title").style.display = "none";
     document.getElementById("content").style.display = "flex";
-    document.getElementById("content").style.justifyContent = "center";
+    document.getElementById("content").style.justifyContent = "flex-start";
     // chrome.runtime.sendMessage({ type: "get_summary" }, (response) => {
     //     console.log("Response from background.js: ", response);
     //     text = response;
